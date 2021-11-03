@@ -9,14 +9,14 @@ int begin, int end)
     if (begin > end)
         return false;
 
-    int mid = begin + (end - begin)/2;
+    int mid = (begin + end)/2;
     if (cur < sortedarr[mid])
         return binarysearch(cur, sortedarr, 
             begin, mid - 1);
     else if (cur > sortedarr[mid])
         return binarysearch(cur, sortedarr, 
             mid + 1, end);
-    else // cur == sortedarr[begin + (end - begin)/2]
+    else // cur == sortedarr[mid]
         return true;
 }
 
@@ -38,9 +38,9 @@ int main()
     cin >> m;
     
     int cur;
-    for (int i=0; i < n; i++)
+    for (int i=0; i < m; i++)
     {
         cin >> cur;
-        cout << binarysearch(cur, arr, 0, n-1) << '\n';
+        cout << binarysearch(cur, arr, 0, n - 1) << '\n';
     }
 }
