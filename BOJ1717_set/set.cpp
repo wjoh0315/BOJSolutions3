@@ -12,6 +12,7 @@ class UnionFind
         UnionFind(int n)
         {
             graph = new int[n+1];
+            // 모든 노드의 부모를 자기 자신으로 초기화
             for (int i=0; i < n+1; i++)
                 graph[i] = i;
             size = n+1;
@@ -19,18 +20,23 @@ class UnionFind
 
         int Find(int cur)
         {
+            // 해당 노드의 부모가 자신이라면 탐색 종료
             if (graph[cur] == cur)
                 return cur;
+            // 해당 노드의 부모를 재귀적으로 탐색 및 트리 (그래프) 재구성
             graph[cur] = Find(graph[cur]); 
             return graph[cur];
         }
 
         void Union(int a, int b)
         {
+            // 두 노드의 부모 탐색
             a = Find(a);
             b = Find(b);
+            // 두 노드의 부모가 같다면 결합 중단
             if (a == b)
                 return;
+            // 인덱스상 루트 노드가 앞순서인 트리에 나머지 트리 결합 (편의)
             graph[a<b?a:b] = a>b?a:b;
         }
 };
