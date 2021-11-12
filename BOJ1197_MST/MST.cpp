@@ -43,9 +43,11 @@ class UnionFind
         }
 };
 
+// 크루스칼 알고리즘
 int solve(int v, int e)
 {
     int a, b, c;
+    // 우선순위 큐 (가중치가 가장 작은 간선부터 골라내기 위함)
     priority_queue<tuple<int, int, int>, vector<tuple<int, int, int>>,
         greater<tuple<int, int, int>>> pq;
     for (int i=0; i < e; i++)
@@ -54,23 +56,29 @@ int solve(int v, int e)
         pq.push(make_tuple(c, a-1, b-1));
     }   
 
+    // 가중치 합산값
     int sum = 0;
+    // 골라낸 간선의 갯수
     int count = 0;
+    // 유니온 파인드
     UnionFind uf(v);
-    int *visited = new int[v] { false, };
+    // 우선순위 큐에 간선이 남아있거나 간선의 갯수가 v - 1이 아닌 동안 반복
     while (!pq.empty() && count < v - 1)
     {
+        // 두 노드가 속한 트리의 루트 노드를 비교해 서로 같다면 건너뛰기 (사이클 형성)
         if (uf.Find(get<1>(pq.top())) 
             == uf.Find(get<2>(pq.top())))
         {
             pq.pop();
             continue;
         }
+        // 두 노드가 속한 트리를 하나의 트리로 결합
         uf.Union(get<1>(pq.top()), get<2>(pq.top()));
-        visited[get<1>(pq.top())] = true;
-        visited[get<2>(pq.top())] = true;
+        // 가중치 합산
         sum += get<0>(pq.top());
+        // 골라낸 간선의 갯수 증가
         count++;
+        // 작업 완료
         pq.pop();
     }
     return sum;
