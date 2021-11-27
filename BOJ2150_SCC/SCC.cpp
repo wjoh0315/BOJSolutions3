@@ -31,7 +31,7 @@ class graph
                 // 아직 방문하지 않았다면
                 if (!sd.visitidx[node])
                     res = min(res, SCC_DFS(node, sd));
-                // 이미 방문했는데  SCC를 이루고 있지 않다면
+                // 이미 방문했는데 SCC를 이루고 있지 않다면
                 else if (!sd.isSCC[node])
                     res = min(res, sd.visitidx[node]);
             }
@@ -73,6 +73,7 @@ class graph
                 0
             };
             vector<vector<int>> scc;
+            // 모든 노드에 대해 SCC를 추출할 것을 보장 (그래프가 끊어진 경우에도)
             for (int i=0; i < size; i++)
                 if (!sd.visitidx[i]) SCC_DFS(i, sd);
             sort(sd.scc.begin(), sd.scc.end());
